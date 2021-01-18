@@ -1,0 +1,4 @@
+node_modules
+**/*.log
+factorio.schema.d.ts
+**/*.lua

@@ -1,0 +1,16 @@
+{
+  "name": "funtorio",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "cdaringe <cdaringe@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tstl",
+    "dev": "tstl --watch",
+    "cptypes": "cp ../factorio-ts/factorio.schema.d.ts ."
+  },
+  "devDependencies": {
+    "typescript": "^4.1.3",
+    "typescript-to-lua": "^0.37.1"
+  }
+}
