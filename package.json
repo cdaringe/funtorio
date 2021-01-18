@@ -6,10 +6,20 @@
   "license": "MIT",
   "scripts": {
     "build": "tstl",
-    "dev": "tstl --watch",
-    "cptypes": "cp ../factorio-ts/factorio.schema.d.ts ."
+    "start": "tstl --watch",
+    "cptypes": "cp ../factorio-ts/factorio.schema.d.ts ./types/",
+    "clean:install": "rm -rf ~/.factorio/mods/funtorio*",
+    "copy:install": "VERSION=$(cat info.json | jq -r .version) && rsync -r --exclude node_modules --exclude '.git*' --exclude build --exclude 'npm*' --exclude README.md --exclude package.json --exclude '*.lock'  ./ ~/.factorio/mods/funtorio_$VERSION/",
+    "install_mod": "run-s clean:install copy:install",
+    "watch": "chokidar 'locale/**/*.cfg' '**/*.lua' '**/*.json' -c 'yarn install_mod'",
+    "prerelease": "rm -rf build && mkdir build",
+    "rel:bundle": "VERSION=$(cat info.json | jq -r .version) && RELEASE=nice-try-train_$VERSION && rm -rf $RELEASE && mkdir -p $RELEASE && cp -r changelog.txt *.lua locale info.json $RELEASE && rm -rf build && mkdir -p build && zip -r build/$RELEASE.zip $RELEASE && rm -rf $RELEASE",
+    "release": "run-s rel:bundle"
   },
   "devDependencies": {
+    "chokidar": "^3.5.1",
+    "chokidar-cli": "^2.1.0",
+    "npm-run-all": "^4.1.5",
     "typescript": "^4.1.3",
     "typescript-to-lua": "^0.37.1"
   }
